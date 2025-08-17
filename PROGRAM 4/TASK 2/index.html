@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Email Validation</title>   
+  </head>
+  <body>
+    <h2> Validate Email </h2>
+    <form id="emailForm" onsubmit="return validateEmailField()">
+     
+      <label for="email">Enter Email:</label>
+      <input type="text" id="email" name="email" required />
+      <div id="emailError" class="error"></div>
+      <div id="emailSuccess" class="success"></div>
+      <br /><br />
+
+      <button type="submit">Validate</button>
+    </form>
+
+    <script>
+       function validateEmail(email) {
+        const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (email.trim() === "") {
+          return "Email cannot be empty";
+        }
+        if (!regex.test(email)) {
+          return "Invalid email format";
+        }
+        return "valid";
+      }
+
+       function validateEmailField() {
+        const email = document.getElementById("email").value;
+        const result = validateEmail(email);
+
+        document.getElementById("emailError").innerText = "";
+        document.getElementById("emailSuccess").innerText = "";
+
+        if (result === "valid") {
+          document.getElementById("emailSuccess").innerText = `${email} is valid.`;
+          return false; 
+        } else {
+          document.getElementById("emailError").innerText =` ${email} is invalid (error message: "${result}").`;
+          return false; 
+        }
+      }
+    </script>
+  </body>
+</html>

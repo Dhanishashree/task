@@ -1,0 +1,23 @@
+<!DOCTYPE html>  
+<html>  
+<head>  
+  <title>Count Vowels in a String</title>  
+</head>  
+<body>  
+  <h2>Count Vowels in a String</h2>  
+  <textarea id="stringInput" placeholder="Enter a string" rows="4" cols="50"></textarea><br>  
+  <button onclick="countVowels()">Count Vowels</button>  
+  <pre id="output"></pre>  
+
+  <script>  
+    function countVowels() {  
+      const text = document.getElementById("stringInput").value;  
+      const vowels = text.match(/[aeiouAEIOU]/g) || [];  
+      const totalVowels = vowels.length;  
+
+      const output = `Total Vowels: ${totalVowels}`;  
+      document.getElementById("output").textContent = output;  
+    }  
+  </script>  
+</body>  
+</html>

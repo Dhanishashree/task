@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Password Validation</title>
+  </head>
+  <body>
+    <h2>Validate Password Field</h2>
+    <form id="passwordForm" onsubmit="return validatePasswordField()">
+      
+      <label for="password">Enter Password:</label>
+      <input type="password" id="password" name="password" required />
+      <div id="passwordError" class="error"></div>
+      <div id="passwordSuccess" class="success"></div>
+      <br /><br />
+
+      <button type="submit">Validate</button>
+    </form>
+
+    <script>
+      
+      function validatePassword(password) {
+        const regex = /^(?=.[A-Z])(?=.\d).{8,}$/;
+        if (password.trim() === "") {
+          return "Password cannot be empty";
+        }
+        if (!regex.test(password)) {
+          return "Password must be at least 8 characters long, contain an uppercase letter, and a number";
+        }
+        return "valid";
+      }
+
+     
+      function validatePasswordField() {
+        const password = document.getElementById("password").value;
+        const result = validatePassword(password);
+
+       
+        document.getElementById("passwordError").innerText = "";
+        document.getElementById("passwordSuccess").innerText = "";
+
+        if (result === "valid") {
+          document.getElementById("passwordSuccess").innerText = "Password is valid.";
+          return false; 
+        } else {
+          document.getElementById("passwordError").innerText =` Invalid password (error message: "${result}").`;
+          return false; 
+        }
+      }
+    </script>
+  </body>
+</html>

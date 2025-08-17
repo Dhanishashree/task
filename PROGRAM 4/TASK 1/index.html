@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Name Validation</title>
+  </head>
+  <body>
+    <h2> Validate Name </h2>
+    <form id="nameForm" onsubmit="return validateNameField()">
+      <label for="name">Enter Name:</label>
+      <input type="text" id="name" name="name" required />
+      <div id="nameError" class="error"></div>
+      <div id="nameSuccess" class="success"></div>
+      <br /><br />
+
+      <button type="submit">Validate</button>
+    </form>
+
+    <script>
+      function validateName(name) {
+        const regex = /^[A-Za-z\s]+$/;
+        if (name.trim() === "") {
+          return "Name cannot be empty";
+        }
+        if (!regex.test(name)) {
+          return "Name can only contain letters and spaces";
+        }
+        return "valid";
+      }
+
+      function validateNameField() {
+        const name = document.getElementById("name").value;
+        const result = validateName(name);
+
+        document.getElementById("nameError").innerText = "";
+        document.getElementById("nameSuccess").innerText = "";
+
+        if (result === "valid") {
+          document.getElementById("nameSuccess").innerText = `${name} is valid.`;
+          return false; 
+        } else {
+          document.getElementById("nameError").innerText = `${name} is invalid (error message: "${result}").`;
+          return false; 
+        }
+      }
+    </script>
+  </body>
+</html>
