@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Live Summary Tool</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <h3>Live Summary Tool</h3>
+  <textarea id="text" rows="8" cols="50" placeholder="Type text here..."></textarea>
+
+  <p>Sentences: <span id="sentences">0</span></p>
+  <p>Paragraphs: <span id="paragraphs">0</span></p>
+  <p>Most Frequent Word: <span id="freqWord">None</span></p>
+
+  <canvas id="chart" width="400" height="200"></canvas>
+
+  <script>
+    let chart;
+    const textBox = document.getElementById("text");
+
+    textBox.addEventListener("input", () => {
+      let text = textBox.value;
+
+      
+      let sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 0).length;
+      document.getElementById("sentences").textContent = sentences;
+
+     
+      let paragraphs = text.split(/\n+/).filter(p => p.trim().length > 0).length;
+      document.getElementById("paragraphs").textContent = paragraphs;
+
+      
+      let words = text.toLowerCase().match(/\b\w+\b/g) || [];
+      let freq = {};
+      words.forEach(w => freq[w] = (freq[w] || 0) + 1);
+
+      let sorted = Object.entries(freq).sort((a,b) => b[1]-a[1]);
+      let most = sorted[0] ? sorted[0][0] + " (" + sorted[0][1] + ")" : "None";
+      document.getElementById("freqWord").textContent = most;
+
+      
+      let labels = sorted.slice(0,5).map(e => e[0]);
+      let counts = sorted.slice(0,5).map(e => e[1]);
+
+      if(chart) chart.destroy();
+      chart = new Chart(document.getElementById("chart"), {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{ label: "Word Frequency", data: counts, backgroundColor: "lightblue" }]
+        }
+      });
+    });
+  </script>
+</body>
+</html>
